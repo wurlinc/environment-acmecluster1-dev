@@ -1,0 +1,10 @@
+adminUser:
+  password: vault:acmecluster1/adminUser:password
+  username: admin
+enableDocker: false
+pipelineUser:
+  email: bira+github.wurlsvcjxbot@wurl.com
+  token: vault:acmecluster1/pipelineUser:token
+  username: wurlsvcjxbot
+prow:
+  hmacToken: vault:acmecluster1/prow:hmacToken

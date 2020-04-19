@@ -1,39 +1,87 @@
 autoUpdate:
   enabled: false
   schedule: ""
+bootConfigURL: https://github.com/cloudbees/cloudbees-jenkins-x-boot-config.git
 cluster:
-  clusterName: ""
-  environmentGitOwner: ""
+  clusterName: acmecluster1
+  devEnvApprovers:
+  - biroca
+  environmentGitOwner: wurlinc
   environmentGitPublic: true
-  project: ""
-  azure: {}
-  provider: gke
-  zone: ""
-gitops: true
+  gitKind: github
+  gitName: github
+  gitServer: https://github.com
+  namespace: jx
+  provider: eks
+  region: us-east-1
+  registry: 497734601064.dkr.ecr.us-east-1.amazonaws.com
 environments:
-  - key: dev
-  - key: staging
-  - key: production
+- ingress:
+    domain: bira.wurl.com
+    externalDNS: true
+    ignoreLoadBalancer: true
+    namespaceSubDomain: -jx.
+    tls:
+      email: bira@wurl.com
+      enabled: true
+      production: true
+  key: dev
+  repository: environment-acmecluster1-dev
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: staging
+  repository: environment-acmecluster1-staging
+- ingress:
+    domain: ""
+    externalDNS: false
+    namespaceSubDomain: ""
+    tls:
+      email: ""
+      enabled: false
+      production: false
+  key: production
+  repository: environment-acmecluster1-production
+gitops: true
 ingress:
-  domain: ""
-  externalDNS: false
+  domain: bira.wurl.com
+  externalDNS: true
+  ignoreLoadBalancer: true
+  namespaceSubDomain: -jx.
   tls:
-    email: ""
-    enabled: false
-    production: false
+    email: bira@wurl.com
+    enabled: true
+    production: true
 kaniko: true
+repository: nexus
 secretStorage: vault
 storage:
+  backup:
+    enabled: false
+    url: ""
   logs:
     enabled: true
-    url: ""
+    url: s3://acmecluster1-logs-314e524c-7a52-4fe2-9ff8-08dc3fcfcec6
   reports:
     enabled: true
-    url: ""
+    url: s3://acmecluster1-reports-d15f8f19-cab7-4c2c-808b-8ce7f1cea4f2
   repository:
     enabled: true
-    url: ""
+    url: s3://acmecluster1-repository-d904bae0-5b5e-40da-9e94-9ea765af13ef
+vault:
+  aws:
+    autoCreate: true
+    iamUserName: svc-jenkinsx
+  disableURLDiscovery: true
+velero:
+  schedule: ""
+  ttl: ""
 versionStream:
-  ref: 2.0.1245+cjxd.8
+  ref: v0.0.29
   url: https://github.com/cloudbees/cloudbees-jenkins-x-versions.git
 webhook: prow
